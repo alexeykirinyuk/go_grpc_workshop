@@ -1,7 +1,15 @@
 package category_service
 
-import "context"
+import (
+	"context"
+	cs "github.com/alexeykirinyuk/go_grpc_workshop/category_service/pkg/category_service"
+)
 
-func (s *Service) GetCategoryById(context.Context, *GetCategoryByIdRequest) (*GetCategoryByIdResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCategoryById not implemented")
+func (s *GrpcServer) GetCategoryById(context.Context, *cs.GetCategoryByIdRequest) (*cs.GetCategoryByIdResponse, error) {
+	return &cs.GetCategoryByIdResponse{
+		Category: &cs.Category{
+			Id:   1,
+			Name: "category-1",
+		},
+	}, nil
 }

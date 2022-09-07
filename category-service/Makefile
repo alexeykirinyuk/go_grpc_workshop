@@ -26,8 +26,6 @@ gen:
 	cd pkg/$(SERVICE_NAME) && ls go.mod || (go mod init github.com/$(SERVICE_PATH)/pkg/$(SERVICE_NAME) && go mod tidy)
 
 	rm -rf pkg/tmp
-	mv swagger/category_service/** swagger/api/
-	rm -rf swagger/google swagger/validate swagger/category_service
 
 .PHONY: run
 run:

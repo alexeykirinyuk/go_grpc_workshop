@@ -8,7 +8,6 @@ func main() {
 	s := server.NewServer(server.Cfg{
 		Host:     "127.0.0.1",
 		GrpcPort: "5002",
-		HttpPort: "5005",
 	})
 	s.Run()
 }
