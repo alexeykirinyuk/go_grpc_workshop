@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/alexeykirinyuk/learning-go/5-protobuf-grpc/2-grpc/pkg/sample_service"
+	"github.com/alexeykirinyuk/go_grpc_workshop/category_service/pkg/category_service"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
@@ -23,7 +23,7 @@ func createGatewayServer(grpcAddr, gatewayAddr string) *http.Server {
 	}
 
 	mux := runtime.NewServeMux()
-	if err := sample_service.RegisterSampleServiceHandler(context.Background(), mux, conn); err != nil {
+	if err := category_service.RegisterCategoryServiceHandler(context.Background(), mux, conn); err != nil {
 		log.Fatal().Err(err).Msg("Failed registration handler")
 	}
 

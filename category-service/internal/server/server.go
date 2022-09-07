@@ -6,8 +6,8 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/alexeykirinyuk/learning-go/5-protobuf-grpc/2-grpc/internal/app/sample_service"
-	dsc "github.com/alexeykirinyuk/learning-go/5-protobuf-grpc/2-grpc/pkg/sample_service"
+	"github.com/alexeykirinyuk/go_grpc_workshop/category_service/internal/app/category_service"
+	dsc "github.com/alexeykirinyuk/go_grpc_workshop/category_service/pkg/category_service"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 )
@@ -53,6 +53,6 @@ func (s *Server) Run() {
 	}
 	grpcServer := grpc.NewServer(opts...)
 
-	dsc.RegisterSampleServiceServer(grpcServer, &sample_service.Service{})
+	dsc.RegisterCategoryServiceServer(grpcServer, &category_service.Service{})
 	grpcServer.Serve(listener)
 }

@@ -1,5 +1,5 @@
-SERVICE_PATH=alexeykirinyuk/learning-go/5-protobuf-grpc/2-grpc
-SERVICE_NAME=sample_service
+SERVICE_PATH=alexeykirinyuk/go_grpc_workshop/category_service
+SERVICE_NAME=category_service
 
 PGV_VERSION:="v0.6.1"
 
@@ -18,7 +18,7 @@ gen:
 	buf generate api
 	
 	mkdir -p pkg/tmp/$(SERVICE_NAME)
-	mv pkg/$(SERVICE_NAME)/github.com/$(SERVICE_PATH)/$(SERVICE_NAME)/* pkg/tmp/$(SERVICE_NAME)
+	mv pkg/$(SERVICE_NAME)/github.com/$(SERVICE_PATH)/pkg/$(SERVICE_NAME)/* pkg/tmp/$(SERVICE_NAME)
 
 	rm -rf pkg/$(SERVICE_NAME)/**
 
@@ -26,8 +26,8 @@ gen:
 	cd pkg/$(SERVICE_NAME) && ls go.mod || (go mod init github.com/$(SERVICE_PATH)/pkg/$(SERVICE_NAME) && go mod tidy)
 
 	rm -rf pkg/tmp
-	mv swagger/sample_service/** swagger/
-	rm -rf swagger/google swagger/validate swagger/sample_service
+	mv swagger/category_service/** swagger/api/
+	rm -rf swagger/google swagger/validate swagger/category_service
 
 .PHONY: run
 run:
@@ -35,4 +35,4 @@ run:
 
 .PHONE: ui
 ui:
-	grpcui --proto ./api/sample_service/sample_service.proto --plaintext localhost:5002
+	grpcui --proto ./api/category_service/category_service.proto --plaintext localhost:5002

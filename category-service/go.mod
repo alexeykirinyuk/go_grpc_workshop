@@ -1,9 +1,9 @@
-module github.com/alexeykirinyuk/learning-go/5-protobuf-grpc/2-grpc
+module github.com/alexeykirinyuk/go_grpc_workshop/category_service
 
 go 1.19
 
 require (
-	github.com/alexeykirinyuk/learning-go/5-protobuf-grpc/2-grpc/pkg/sample_service v0.0.0-00010101000000-000000000000
+	github.com/alexeykirinyuk/go_grpc_workshop/category_service/pkg/category_service v0.0.0-00010101000000-000000000000
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.11.3
 	github.com/rs/zerolog v1.28.0
 	google.golang.org/grpc v1.49.0
@@ -21,4 +21,4 @@ require (
 	google.golang.org/protobuf v1.28.1 // indirect
 )
 
-replace github.com/alexeykirinyuk/learning-go/5-protobuf-grpc/2-grpc/pkg/sample_service => ./pkg/sample_service
+replace github.com/alexeykirinyuk/go_grpc_workshop/category_service/pkg/category_service => ./pkg/category_service
