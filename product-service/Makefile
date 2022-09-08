@@ -11,6 +11,7 @@ deps-go:
 	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.5.0
 	go install github.com/envoyproxy/protoc-gen-validate@$(PGV_VERSION)
 	go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@latest
+	go install github.com/golang/mock/mockgen@v1.6.0
 
 .PHONY: gen
 gen:
@@ -26,6 +27,7 @@ gen:
 	cd pkg/$(SERVICE_NAME) && ls go.mod || (go mod init github.com/$(SERVICE_PATH)/pkg/$(SERVICE_NAME) && go mod tidy)
 
 	rm -rf pkg/tmp
+	go generate ./...
 
 .PHONY: run
 run:
@@ -34,3 +36,7 @@ run:
 .PHONE: ui
 ui:
 	grpcui --proto ./api/product_service/product_service.proto --plaintext localhost:5002
+
+.PHONE: lint
+lint:
+	golangci-lint run ./...

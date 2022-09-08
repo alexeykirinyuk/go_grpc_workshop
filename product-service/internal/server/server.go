@@ -2,9 +2,8 @@ package server
 
 import (
 	"fmt"
-	"github.com/alexeykirinyuk/go_grpc_workshop/product_service/internal/app/grpc_server"
-	"github.com/alexeykirinyuk/go_grpc_workshop/product_service/internal/repository"
-	"github.com/alexeykirinyuk/go_grpc_workshop/product_service/internal/service"
+	"github.com/alexeykirinyuk/go_grpc_workshop/product_service/internal/app/rpc_product_service"
+	product_service "github.com/alexeykirinyuk/go_grpc_workshop/product_service/internal/service/product"
 	dsc "github.com/alexeykirinyuk/go_grpc_workshop/product_service/pkg/product_service"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
@@ -36,12 +35,10 @@ func (s *Server) Run() {
 	}
 	grpcServer := grpc.NewServer()
 
-	dsc.RegisterProductServiceServer(grpcServer,
-		grpc_server.New(
-			service.New(
-				repository.New(),
-			),
-		))
+	service := product_service.NewService()
+	rpcService := rpc_product_service.New(service)
+
+	dsc.RegisterProductServiceServer(grpcServer, rpcService)
 	reflection.Register(grpcServer)
 
 	err = grpcServer.Serve(listener)
