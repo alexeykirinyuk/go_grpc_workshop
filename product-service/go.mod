@@ -3,6 +3,7 @@ module github.com/alexeykirinyuk/go_grpc_workshop/product_service
 go 1.19
 
 require (
+	github.com/alexeykirinyuk/go_grpc_workshop/category-service/pkg/category-service v0.0.0-00010101000000-000000000000
 	github.com/alexeykirinyuk/go_grpc_workshop/product_service/pkg/product_service v0.0.0-00010101000000-000000000000
 	github.com/golang/mock v1.6.0
 	github.com/pkg/errors v0.9.1
@@ -28,3 +29,5 @@ require (
 )
 
 replace github.com/alexeykirinyuk/go_grpc_workshop/product_service/pkg/product_service => ./pkg/product_service
+
+replace github.com/alexeykirinyuk/go_grpc_workshop/category-service/pkg/category-service => ./../category-service/pkg/category-service

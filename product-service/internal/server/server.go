@@ -1,7 +1,9 @@
 package server
 
 import (
+	"context"
 	"fmt"
+	csPb "github.com/alexeykirinyuk/go_grpc_workshop/category-service/pkg/category-service"
 	"github.com/alexeykirinyuk/go_grpc_workshop/product_service/internal/app/rpc_product_service"
 	product_service "github.com/alexeykirinyuk/go_grpc_workshop/product_service/internal/service/product"
 	dsc "github.com/alexeykirinyuk/go_grpc_workshop/product_service/pkg/product_service"
@@ -12,8 +14,9 @@ import (
 )
 
 type Cfg struct {
-	Host     string
-	GrpcPort string
+	Host               string
+	GrpcPort           string
+	CategoryClientAddr string
 }
 
 type Server struct {
@@ -35,7 +38,19 @@ func (s *Server) Run() {
 	}
 	grpcServer := grpc.NewServer()
 
-	service := product_service.NewService()
+	categoryCtx, err := grpc.DialContext(
+		context.Background(),
+		s.cfg.CategoryClientAddr,
+		grpc.WithInsecure(),
+	)
+
+	if err != nil {
+		log.Fatal().Err(err).Msg("can't connect to category service")
+	}
+
+	catServ := csPb.NewCategoryServiceClient(categoryCtx)
+
+	service := product_service.NewService(catServ)
 	rpcService := rpc_product_service.New(service)
 
 	dsc.RegisterProductServiceServer(grpcServer, rpcService)
