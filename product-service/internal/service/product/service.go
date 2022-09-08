@@ -2,8 +2,8 @@ package product_service
 
 import (
 	"context"
-	"errors"
 	pb "github.com/alexeykirinyuk/go_grpc_workshop/category-service/pkg/category-service"
+	"github.com/alexeykirinyuk/go_grpc_workshop/product_service/internal/pkg/internal_errors"
 )
 
 //go:generate mockgen -destination=service_mocks_test.go -self_package=github.com/alexeykirinyuk/go_grpc_workshop/product_service/internal/service/product -package=product_service . IRepository,ICategoryClient
@@ -45,7 +45,7 @@ func (p *Service) CreateProduct(
 	}
 
 	if !exists {
-		return nil, errors.New("category does not exists")
+		return nil, internal_errors.WrongCategory
 	}
 
 	if err := p.repo.SaveProduct(ctx, product); err != nil {

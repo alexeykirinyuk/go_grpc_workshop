@@ -7,7 +7,7 @@ payload=$(
   cat <<EOF
 {
   "name": "test-product",
-  "category_id": 55
+  "category_id": 11
 }
 EOF
 )

@@ -6,8 +6,9 @@ import (
 
 func main() {
 	s := server.NewServer(server.Cfg{
-		Host:     "127.0.0.1",
-		GrpcPort: "5003",
+		Host:               "127.0.0.1",
+		GrpcPort:           "5003",
+		CategoryClientAddr: "localhost:5002",
 	})
 	s.Run()
 }
