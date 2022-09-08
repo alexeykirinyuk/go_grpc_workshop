@@ -57,7 +57,7 @@ func (UnimplementedCategoryServiceServer) mustEmbedUnimplementedCategoryServiceS
 
 // UnsafeCategoryServiceServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to CategoryServiceServer will
-// result in compilation errors.
+// result in compilation internal_errors.
 type UnsafeCategoryServiceServer interface {
 	mustEmbedUnimplementedCategoryServiceServer()
 }

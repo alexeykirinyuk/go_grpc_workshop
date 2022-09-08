@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/alexeykirinyuk/go_grpc_workshop/category_service/pkg/category_service v0.0.0-00010101000000-000000000000
-	github.com/grpc-ecosystem/grpc-gateway/v2 v2.11.3
+	github.com/pkg/errors v0.9.1
 	github.com/rs/zerolog v1.28.0
 	google.golang.org/grpc v1.49.0
 )
@@ -12,6 +12,7 @@ require (
 require (
 	github.com/envoyproxy/protoc-gen-validate v0.6.7 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/google/go-cmp v0.5.8 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	golang.org/x/net v0.0.0-20220624214902-1bab6f366d9e // indirect

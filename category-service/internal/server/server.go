@@ -34,13 +34,7 @@ func (s *Server) Run() {
 	if err != nil {
 		log.Fatal().Err(err).Msg("can't listen grpcAddr")
 	}
-
-	opts := []grpc.ServerOption{
-		grpc.UnaryInterceptor(
-			validateInterceptor,
-		),
-	}
-	grpcServer := grpc.NewServer(opts...)
+	grpcServer := grpc.NewServer()
 
 	dsc.RegisterCategoryServiceServer(grpcServer,
 		category_service.New(

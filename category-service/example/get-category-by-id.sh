@@ -6,7 +6,7 @@ GRPC_METHOD="alexeykirinyuk.go_grpc_workshop.category_service.category_service.v
 payload=$(
   cat <<EOF
 {
-  "id": 123
+  "id": 4
 }
 EOF
 )
