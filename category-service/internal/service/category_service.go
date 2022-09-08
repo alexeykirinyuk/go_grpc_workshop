@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
-	"github.com/alexeykirinyuk/go_grpc_workshop/category_service/internal/model"
-	"github.com/alexeykirinyuk/go_grpc_workshop/category_service/internal/pkg/internal_errors"
+	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/model"
+	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/pkg/internal_errors"
 	"github.com/pkg/errors"
 )
 

@@ -2,7 +2,7 @@ package repository
 
 import (
 	"context"
-	"github.com/alexeykirinyuk/go_grpc_workshop/category_service/internal/model"
+	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/model"
 )
 
 type CategoryRepository struct {

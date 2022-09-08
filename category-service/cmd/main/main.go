@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/alexeykirinyuk/go_grpc_workshop/category_service/internal/server"
+	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/server"
 )
 
 func main() {

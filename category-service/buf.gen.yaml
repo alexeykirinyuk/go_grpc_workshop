@@ -1,16 +1,16 @@
 version: v1
 plugins:
   - name: go
-    out: pkg/category_service
+    out: pkg/category-service
     opt:
       - paths=import
   - name: go-grpc
-    out: pkg/category_service
+    out: pkg/category-service
     opt:
       - paths=import
 # installation - go install github.com/envoyproxy/protoc-gen-validate
   - name: validate
-    out: pkg/category_service
+    out: pkg/category-service
     opt:
       - lang=go
     strategy: directory

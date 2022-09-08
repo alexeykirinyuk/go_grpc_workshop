@@ -1,5 +1,5 @@
-SERVICE_PATH=alexeykirinyuk/go_grpc_workshop/category_service
-SERVICE_NAME=category_service
+SERVICE_PATH=alexeykirinyuk/go_grpc_workshop/category-service
+SERVICE_NAME=category-service
 
 PGV_VERSION:="v0.6.1"
 

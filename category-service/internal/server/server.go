@@ -2,10 +2,10 @@ package server
 
 import (
 	"fmt"
-	"github.com/alexeykirinyuk/go_grpc_workshop/category_service/internal/app/category_service"
-	"github.com/alexeykirinyuk/go_grpc_workshop/category_service/internal/repository"
-	"github.com/alexeykirinyuk/go_grpc_workshop/category_service/internal/service"
-	dsc "github.com/alexeykirinyuk/go_grpc_workshop/category_service/pkg/category_service"
+	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/app/category_service"
+	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/repository"
+	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/service"
+	dsc "github.com/alexeykirinyuk/go_grpc_workshop/category-service/pkg/category-service"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"

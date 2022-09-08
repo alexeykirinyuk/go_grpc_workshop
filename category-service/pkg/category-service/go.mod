@@ -1,4 +1,4 @@
-module github.com/alexeykirinyuk/go_grpc_workshop/category_service/pkg/category_service
+module github.com/alexeykirinyuk/go_grpc_workshop/category-service/pkg/category-service
 
 go 1.19
 
