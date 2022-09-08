@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package alexeykirinyuk.go_grpc_workshop.product_service.product_service.v1;
+
+import "validate/validate.proto";
+
+option go_package = "github.com/alexeykirinyuk/go_grpc_workshop/product_service/pkg/product_service;product_service";
+
+service ProductService {
+  rpc CreateProduct (CreateProductRequest) returns (CreateProductResponse);
+}
+
+message Product {
+  int64 id = 1;
+  string name = 2;
+  int64 category_id = 3;
+}
+
+message CreateProductRequest {
+  string name = 1 [(validate.rules).string = {min_len: 1, max_len: 100}];
+  int64 category_id = 2 [(validate.rules).int64.gt = 0];
+}
+
+message CreateProductResponse {
+  Product product = 1;
+}
