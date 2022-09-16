@@ -5,6 +5,8 @@ import (
 	"fmt"
 	csPb "github.com/alexeykirinyuk/go_grpc_workshop/category-service/pkg/category-service"
 	"github.com/alexeykirinyuk/go_grpc_workshop/product_service/internal/app/rpc_product_service"
+	"github.com/alexeykirinyuk/go_grpc_workshop/product_service/internal/config"
+	"github.com/alexeykirinyuk/go_grpc_workshop/product_service/internal/db"
 	product_service "github.com/alexeykirinyuk/go_grpc_workshop/product_service/internal/service/product"
 	dsc "github.com/alexeykirinyuk/go_grpc_workshop/product_service/pkg/product_service"
 	"github.com/rs/zerolog/log"
@@ -50,7 +52,17 @@ func (s *Server) Run() {
 
 	catServ := csPb.NewCategoryServiceClient(categoryCtx)
 
-	service := product_service.NewService(catServ)
+	if err := config.ReadConfigYML("config.yml"); err != nil {
+		log.Fatal().Err(err).Msg("config.ReadConfigYML() error")
+	}
+
+	conn, err := db.ConnectDB(config.GetConfigInstance().DB)
+	if err != nil {
+		log.Fatal().Err(err).Msg("sql.Open(...) err")
+	}
+	defer conn.Close()
+
+	service := product_service.NewService(catServ, conn)
 	rpcService := rpc_product_service.New(service)
 
 	dsc.RegisterProductServiceServer(grpcServer, rpcService)

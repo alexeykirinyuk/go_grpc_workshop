@@ -8,6 +8,8 @@ option go_package = "github.com/alexeykirinyuk/go_grpc_workshop/product_service/
 
 service ProductService {
   rpc CreateProduct (CreateProductRequest) returns (CreateProductResponse);
+  rpc DeleteProduct (DeleteProductRequest) returns (DeleteProductResponse);
+  rpc GetProduct (GetProductRequest) returns (GetProductResponse);
 }
 
 message Product {
@@ -24,3 +26,18 @@ message CreateProductRequest {
 message CreateProductResponse {
   Product product = 1;
 }
+
+message DeleteProductRequest {
+  repeated int64 product_id = 1 [(validate.rules).repeated.items.int64.gt = 0];
+}
+
+message DeleteProductResponse {}
+
+message GetProductRequest {
+  repeated int64 product_id = 1 [(validate.rules).repeated.items.int64.gt = 0];
+}
+
+message GetProductResponse {
+  repeated Product product = 1;
+}
+

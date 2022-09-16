@@ -12,8 +12,10 @@ deps-go:
 	go install github.com/envoyproxy/protoc-gen-validate@$(PGV_VERSION)
 	go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@latest
 
-.PHONE: app-deps
+.PHONE: app-depsa
 app-deps:
+	go mod download
+	cd ./pkg/$(SERVICE_NAME)
 	go mod download
 
 .PHONY: gen
@@ -47,6 +49,4 @@ lint:
 	golangci-lint run ./...
 
 .build:
-	go mod download && CGO_ENABLED=0  go build \
-		-tags='no_mysql no_sqlite3' \
-		-o ./bin/grpc-server$(shell go env GOEXE) ./cmd/grpc-server/main.go
+	go build -o ./bin/grpc-server$(shell go env GOEXE) ./cmd/grpc-server/main.go

@@ -38,4 +38,4 @@ RUN chmod +x ./grpc-server
 
 EXPOSE 6053
 
-CMD ["grpc-server"]
+ENTRYPOINT ["/root/grpc-server"]

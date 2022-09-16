@@ -4,7 +4,7 @@ import (
 	"embed"
 	"github.com/alexeykirinyuk/go_grpc_workshop/product_service/internal/config"
 	"github.com/alexeykirinyuk/go_grpc_workshop/product_service/internal/db"
-	_ "github.com/jackc/pgx/v4"
+	_ "github.com/jackc/pgx/v4/stdlib"
 	"github.com/pressly/goose/v3"
 	"github.com/rs/zerolog/log"
 )

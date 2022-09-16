@@ -1,5 +1,5 @@
 db:
-  DSN: "postgres://user:password@localhost:5432/db"
+  DSN: "postgres://postgres:postgres@localhost:5432/db"
   maxOpenConns: 5
   maxIdleConns: 5
   connMaxIdleTime: 5m

@@ -1,4 +1,4 @@
-package grpc_server
+package main
 
 import (
 	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/server"
