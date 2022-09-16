@@ -1,0 +1,3 @@
+# docker postgres data
+postgres-data/**
+**/bin/**

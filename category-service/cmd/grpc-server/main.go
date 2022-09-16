@@ -1,4 +1,4 @@
-package main
+package grpc_server
 
 import (
 	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/server"
@@ -7,7 +7,7 @@ import (
 func main() {
 	s := server.NewServer(server.Cfg{
 		Host:     "127.0.0.1",
-		GrpcPort: "5002",
+		GrpcPort: "6053",
 	})
 	s.Run()
 }

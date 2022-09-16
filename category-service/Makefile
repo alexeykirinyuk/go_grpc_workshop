@@ -12,6 +12,10 @@ deps-go:
 	go install github.com/envoyproxy/protoc-gen-validate@$(PGV_VERSION)
 	go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@latest
 
+.PHONE: app-deps
+app-deps:
+	go mod download
+
 .PHONY: gen
 gen:
 	rm -rf pkg
@@ -29,8 +33,20 @@ gen:
 
 .PHONY: run
 run:
-	go run ./cmd/main
+	go run ./cmd/grpc-server
+
+.PHONE: build
+build: gen .build
 
 .PHONE: ui
 ui:
-	grpcui --proto ./api/category_service/category_service.proto --plaintext localhost:5002
+	grpcui --proto ./api/product_service/product_service.proto --plaintext localhost:5002
+
+.PHONE: lint
+lint:
+	golangci-lint run ./...
+
+.build:
+	go mod download && CGO_ENABLED=0  go build \
+		-tags='no_mysql no_sqlite3' \
+		-o ./bin/grpc-server$(shell go env GOEXE) ./cmd/grpc-server/main.go

@@ -11,13 +11,16 @@ deps-go:
 	go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.5.0
 	go install github.com/envoyproxy/protoc-gen-validate@$(PGV_VERSION)
 	go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger@latest
-	go install github.com/golang/mock/mockgen@v1.6.0
+
+.PHONE: app-deps
+app-deps:
+	go mod download
 
 .PHONY: gen
 gen:
 	rm -rf pkg
 	buf generate api
-	
+
 	mkdir -p pkg/tmp/$(SERVICE_NAME)
 	mv pkg/$(SERVICE_NAME)/github.com/$(SERVICE_PATH)/pkg/$(SERVICE_NAME)/* pkg/tmp/$(SERVICE_NAME)
 
@@ -27,11 +30,13 @@ gen:
 	cd pkg/$(SERVICE_NAME) && ls go.mod || (go mod init github.com/$(SERVICE_PATH)/pkg/$(SERVICE_NAME) && go mod tidy)
 
 	rm -rf pkg/tmp
-	go generate ./...
 
 .PHONY: run
 run:
 	go run ./cmd/main
+
+.PHONE: build
+build: gen .build
 
 .PHONE: ui
 ui:
@@ -40,3 +45,8 @@ ui:
 .PHONE: lint
 lint:
 	golangci-lint run ./...
+
+.build:
+	go mod download && CGO_ENABLED=0  go build \
+		-tags='no_mysql no_sqlite3' \
+		-o ./bin/grpc-server$(shell go env GOEXE) ./cmd/grpc-server/main.go
