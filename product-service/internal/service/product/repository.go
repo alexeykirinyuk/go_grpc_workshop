@@ -18,9 +18,8 @@ func newRepo(db *sqlx.DB) *Repository {
 }
 
 func (r *Repository) SaveProduct(ctx context.Context, product *Product) error {
-
 	query := sq.Insert("products").PlaceholderFormat(sq.Dollar).
-		Columns("name", "category_id").Values(product.Name, product.CategoryId).
+		Columns("name", "category_id", "info").Values(product.Name, product.CategoryId, product.Attributes).
 		Suffix("RETURNING (id)").RunWith(r.db)
 
 	rr, err := query.QueryContext(ctx)

@@ -17,13 +17,9 @@ func (p *RpcProductService) GetProduct(ctx context.Context, req *pb.GetProductRe
 		return nil, err
 	}
 
-	res := make([]*pb.Product, 0, len(products))
-	for _, p := range products {
-		res = append(res, &pb.Product{
-			Id:         p.ID,
-			Name:       p.Name,
-			CategoryId: p.CategoryId,
-		})
+	res := make([]*pb.Product, len(products))
+	for idx, product := range products {
+		res[idx] = convertProductToPb(product)
 	}
 
 	return &pb.GetProductResponse{

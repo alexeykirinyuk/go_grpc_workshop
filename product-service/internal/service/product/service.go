@@ -35,11 +35,13 @@ func (p *Service) CreateProduct(
 	ctx context.Context,
 	name string,
 	categoryID int64,
+	attributes []ProductAttribute,
 ) (*Product, error) {
 	product := &Product{
 		ID:         0,
 		Name:       name,
 		CategoryId: categoryID,
+		Attributes: attributes,
 	}
 
 	exists, err := p.client.IsCategoryExists(ctx, categoryID)

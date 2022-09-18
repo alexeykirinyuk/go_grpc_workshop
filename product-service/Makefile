@@ -35,7 +35,7 @@ gen:
 
 .PHONY: run
 run:
-	go run ./migrations
+	mig
 	go run ./cmd/grpc-server
 
 .PHONY: build
@@ -56,6 +56,10 @@ lint:
 psql:
 	docker rm -f "product-service-db"
 	docker run -p "5432:5432" -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=postgres" --name "product-service-db" -e "POSTGRES_DB=db" -d postgres
+
+.PHONE: mig
+mig:
+	go run ./migrations
 
 .PHONY: psql-down
 psql-down:
