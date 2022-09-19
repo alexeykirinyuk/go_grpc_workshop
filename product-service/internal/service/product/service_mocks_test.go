@@ -34,6 +34,35 @@ func (m *MockIRepository) EXPECT() *MockIRepositoryMockRecorder {
 	return m.recorder
 }
 
+// DeleteProduct mocks base method.
+func (m *MockIRepository) DeleteProduct(arg0 context.Context, arg1 []int64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteProduct", arg0, arg1)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteProduct indicates an expected call of DeleteProduct.
+func (mr *MockIRepositoryMockRecorder) DeleteProduct(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteProduct", reflect.TypeOf((*MockIRepository)(nil).DeleteProduct), arg0, arg1)
+}
+
+// GetProduct mocks base method.
+func (m *MockIRepository) GetProduct(arg0 context.Context, arg1 []int64) ([]Product, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetProduct", arg0, arg1)
+	ret0, _ := ret[0].([]Product)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetProduct indicates an expected call of GetProduct.
+func (mr *MockIRepositoryMockRecorder) GetProduct(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetProduct", reflect.TypeOf((*MockIRepository)(nil).GetProduct), arg0, arg1)
+}
+
 // SaveProduct mocks base method.
 func (m *MockIRepository) SaveProduct(arg0 context.Context, arg1 *Product) error {
 	m.ctrl.T.Helper()

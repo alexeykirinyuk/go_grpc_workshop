@@ -34,7 +34,7 @@ func TestCreateProduct_Success_ReturnName(t *testing.T) {
 			return nil
 		})
 
-	prod, err := serv.CreateProduct(context.Background(), "test-product", 312)
+	prod, err := serv.CreateProduct(context.Background(), "test-product", 312, []ProductAttribute{})
 	require.Nil(t, err)
 	require.Equal(t, "test-product", prod.Name)
 }
@@ -53,7 +53,7 @@ func TestCreateProduct_Success_ReturnCategoryID(t *testing.T) {
 			return nil
 		})
 
-	prod, err := serv.CreateProduct(context.Background(), "test-product", 312)
+	prod, err := serv.CreateProduct(context.Background(), "test-product", 312, []ProductAttribute{})
 	require.Nil(t, err)
 	require.Equal(t, int64(312), prod.CategoryId)
 }
@@ -72,7 +72,7 @@ func TestCreateProduct_Success_Return_ID(t *testing.T) {
 			return nil
 		})
 
-	prod, err := serv.CreateProduct(context.Background(), "test-product", 312)
+	prod, err := serv.CreateProduct(context.Background(), "test-product", 312, []ProductAttribute{})
 	require.Nil(t, err)
 	require.Equal(t, int64(124), prod.ID)
 }
@@ -84,6 +84,6 @@ func TestCreateProduct_CategoryDoesNotExists(t *testing.T) {
 		IsCategoryExists(context.Background(), int64(312)).
 		Return(false, nil)
 
-	_, err := serv.CreateProduct(context.Background(), "test-product", 312)
+	_, err := serv.CreateProduct(context.Background(), "test-product", 312, []ProductAttribute{})
 	require.NotNil(t, err)
 }

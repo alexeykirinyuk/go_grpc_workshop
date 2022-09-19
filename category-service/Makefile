@@ -42,7 +42,7 @@ build: gen .build
 
 .PHONE: ui
 ui:
-	grpcui --proto ./api/product_service/product_service.proto --plaintext localhost:5002
+	grpcui --plaintext localhost:6053
 
 .PHONE: lint
 lint:
@@ -50,3 +50,16 @@ lint:
 
 .build:
 	go build -o ./bin/grpc-server$(shell go env GOEXE) ./cmd/grpc-server/main.go
+
+.PHONY: psql
+psql:
+	docker rm -f "category-service-db"
+	docker run -p "6532:5432" -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=postgres" --name "category-service-db" -e "POSTGRES_DB=db" -d postgres
+
+.PHONE: mig
+mig:
+	go run ./cmd/migrations/main.go
+
+.PHONY: psql-down
+psql-down:
+	docker rm -f "category-service-db"

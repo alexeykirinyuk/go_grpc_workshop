@@ -8,6 +8,7 @@ option go_package = "github.com/alexeykirinyuk/go_grpc_workshop/category-service
 
 service CategoryService {
     rpc GetCategoryById (GetCategoryByIdRequest) returns (GetCategoryByIdResponse);
+    rpc ExecTask (ExecTaskRequest) returns (ExecTaskResponse);
 }
 
 message GetCategoryByIdRequest {
@@ -22,4 +23,10 @@ message GetCategoryByIdResponse {
 message Category {
     uint64 id = 1;
     string name = 2;
+}
+
+message ExecTaskRequest {
+}
+
+message ExecTaskResponse {
 }

@@ -19,6 +19,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CategoryServiceClient interface {
 	GetCategoryById(ctx context.Context, in *GetCategoryByIdRequest, opts ...grpc.CallOption) (*GetCategoryByIdResponse, error)
+	ExecTask(ctx context.Context, in *ExecTaskRequest, opts ...grpc.CallOption) (*ExecTaskResponse, error)
 }
 
 type categoryServiceClient struct {
@@ -38,11 +39,21 @@ func (c *categoryServiceClient) GetCategoryById(ctx context.Context, in *GetCate
 	return out, nil
 }
 
+func (c *categoryServiceClient) ExecTask(ctx context.Context, in *ExecTaskRequest, opts ...grpc.CallOption) (*ExecTaskResponse, error) {
+	out := new(ExecTaskResponse)
+	err := c.cc.Invoke(ctx, "/alexeykirinyuk.go_grpc_workshop.category_service.category_service.v1.CategoryService/ExecTask", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CategoryServiceServer is the server API for CategoryService service.
 // All implementations must embed UnimplementedCategoryServiceServer
 // for forward compatibility
 type CategoryServiceServer interface {
 	GetCategoryById(context.Context, *GetCategoryByIdRequest) (*GetCategoryByIdResponse, error)
+	ExecTask(context.Context, *ExecTaskRequest) (*ExecTaskResponse, error)
 	mustEmbedUnimplementedCategoryServiceServer()
 }
 
@@ -52,6 +63,9 @@ type UnimplementedCategoryServiceServer struct {
 
 func (UnimplementedCategoryServiceServer) GetCategoryById(context.Context, *GetCategoryByIdRequest) (*GetCategoryByIdResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCategoryById not implemented")
+}
+func (UnimplementedCategoryServiceServer) ExecTask(context.Context, *ExecTaskRequest) (*ExecTaskResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ExecTask not implemented")
 }
 func (UnimplementedCategoryServiceServer) mustEmbedUnimplementedCategoryServiceServer() {}
 
@@ -84,6 +98,24 @@ func _CategoryService_GetCategoryById_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CategoryService_ExecTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExecTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CategoryServiceServer).ExecTask(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/alexeykirinyuk.go_grpc_workshop.category_service.category_service.v1.CategoryService/ExecTask",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CategoryServiceServer).ExecTask(ctx, req.(*ExecTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CategoryService_ServiceDesc is the grpc.ServiceDesc for CategoryService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -94,6 +126,10 @@ var CategoryService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCategoryById",
 			Handler:    _CategoryService_GetCategoryById_Handler,
+		},
+		{
+			MethodName: "ExecTask",
+			Handler:    _CategoryService_ExecTask_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

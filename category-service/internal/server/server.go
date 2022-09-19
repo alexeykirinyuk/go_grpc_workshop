@@ -1,10 +1,15 @@
 package server
 
 import (
+	"context"
 	"fmt"
 	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/app/category_service"
-	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/repository"
-	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/service"
+	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/config"
+	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/service/category"
+	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/service/category/category_repository"
+	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/service/database"
+	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/service/task"
+	task_repository "github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/service/task/repository"
 	dsc "github.com/alexeykirinyuk/go_grpc_workshop/category-service/pkg/category-service"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
@@ -36,12 +41,24 @@ func (s *Server) Run() {
 	}
 	grpcServer := grpc.NewServer()
 
-	dsc.RegisterCategoryServiceServer(grpcServer,
-		category_service.New(
-			service.New(
-				repository.New(),
-			),
-		))
+	if err := config.ReadConfigYML("config.yml"); err != nil {
+		log.Fatal().Err(err).Msg("config.ReadConfigYML() error")
+	}
+
+	ctx := context.Background()
+	conn, err := database.New(ctx, config.GetConfigInstance().DB.DSN)
+	if err != nil {
+		log.Fatal().Err(err).Msg("sql.Open(...) err")
+	}
+
+	categoriesRepo := category_repository.New()
+	categoryServ := category.New(categoriesRepo)
+
+	tasksRepo := task_repository.New(conn)
+	tasksServ := task.NewService(tasksRepo, conn)
+	grpcServ := category_service.New(categoryServ, tasksServ)
+
+	dsc.RegisterCategoryServiceServer(grpcServer, grpcServ)
 	reflection.Register(grpcServer)
 
 	err = grpcServer.Serve(listener)

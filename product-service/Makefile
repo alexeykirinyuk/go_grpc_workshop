@@ -20,6 +20,7 @@ app-deps:
 
 .PHONY: gen
 gen:
+	go generate ./...
 	rm -rf pkg
 	buf generate api
 

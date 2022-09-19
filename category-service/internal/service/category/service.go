@@ -1,21 +1,20 @@
-package service
+package category
 
 import (
 	"context"
-	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/model"
 	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/pkg/internal_errors"
 	"github.com/pkg/errors"
 )
 
 type Service struct {
-	r RepositoryInterface
+	r Repository
 }
 
-type RepositoryInterface interface {
-	GetCategories(ctx context.Context) (model.Categories, error)
+type Repository interface {
+	GetCategories(ctx context.Context) (Categories, error)
 }
 
-func New(repository RepositoryInterface) *Service {
+func New(repository Repository) *Service {
 	return &Service{
 		r: repository,
 	}
@@ -23,7 +22,7 @@ func New(repository RepositoryInterface) *Service {
 
 var ErrNoCategory = errors.Wrap(internal_errors.ErrNotFound, "category not found")
 
-func (s Service) GetCategoryByID(ctx context.Context, id uint64) (*model.Category, error) {
+func (s Service) GetCategoryByID(ctx context.Context, id uint64) (*Category, error) {
 	cats, err := s.r.GetCategories(ctx)
 	if err != nil {
 		return nil, errors.Wrap(err, "repository.GetCategories")

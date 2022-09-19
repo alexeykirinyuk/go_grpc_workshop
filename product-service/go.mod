@@ -19,6 +19,7 @@ require (
 )
 
 require (
+	github.com/DATA-DOG/go-sqlmock v1.5.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/envoyproxy/protoc-gen-validate v0.6.8 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect

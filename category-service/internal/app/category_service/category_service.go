@@ -1,21 +1,18 @@
 package category_service
 
 import (
-	"context"
-	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/model"
+	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/service/category"
+	"github.com/alexeykirinyuk/go_grpc_workshop/category-service/internal/service/task"
 	cs "github.com/alexeykirinyuk/go_grpc_workshop/category-service/pkg/category-service"
 )
-
-type CategoryService interface {
-	GetCategoryByID(ctx context.Context, id uint64) (*model.Category, error)
-}
 
 type GrpcServer struct {
 	cs.UnimplementedCategoryServiceServer
 
-	service CategoryService
+	categories *category.Service
+	tasks      *task.Service
 }
 
-func New(s CategoryService) *GrpcServer {
-	return &GrpcServer{service: s}
+func New(s *category.Service, t *task.Service) *GrpcServer {
+	return &GrpcServer{categories: s, tasks: t}
 }
